@@ -1,7 +1,7 @@
 import React from "react";
 
 const Maker = () => {
-  const exists = console.log;
+  const exists = () => alert("Working!");
   return <button onClick={exists}>MAKER</button>;
 };
 
