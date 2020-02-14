@@ -2,33 +2,27 @@ import React from "react";
 import styled from "styled-components";
 
 import Breaker from "./components/Breaker";
-import Maker from "./components/Maker";
 
 const App = () => {
   return (
     <StylishPage>
-      <Maker />
       <Breaker />
     </StylishPage>
   );
 };
 
 const StylishPage = styled.div`
-  button {
-    margin: 20px auto;
-    padding: 15px 30px;
-    display: block;
-    border: 2px solid white;
-    color: white;
+  div {
+    border-radius: 44px;
+    background: #ceb4d4;
+    box-shadow: 20px 20px 60px #af99b4, -20px -20px 60px #edcff4;
+    margin: 100px auto;
+    text-align: center;
+    color: #8f7e93;
+    width: 500px;
+    font-family: "Space Mono", "Courier New", Courier, monospace;
     font-weight: bold;
-    background: transparent;
-    border-radius: 2rem;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    &:hover {
-      background: white;
-      color: darkcyan;
-      cursor: pointer;
-    }
+    padding: 100px 200px;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { captureException, configureScope } from "@sentry/browser";
 
 const names = [
@@ -46,27 +46,28 @@ const getUsername = () => names.randomElement() + getId(1000);
 const getEmail = () =>
   names.randomElement() + getId(100) + "@" + handles.randomElement() + ".com";
 
-const bork = () => {
-  for (let i = 0; i < 250; i++) {
-    const user = {
-      id: getId(1231234),
-      username: getUsername(),
-      email: getEmail()
-    };
-    configureScope(scope => {
-      scope.setUser(user);
-      scope.setTag("best_friend", names.randomElement());
-      scope.setTag("random_num", getId(123123));
-    });
-    captureException(new TypeError("i broke things again!@@!@!@!@!@!@!"));
-    console.log(
-      `User ${user.username} | ${user.email} | ${user.id} has logged an error.`
-    );
-  }
-};
-
 const Breaker = () => {
-  return <button onClick={bork}>BREAKER</button>;
+  const [times, updateTimes] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const user = {
+        id: getId(1231234),
+        username: getUsername(),
+        email: getEmail()
+      };
+      configureScope(scope => {
+        scope.setUser(user);
+        scope.setTag("best_friend", names.randomElement());
+        scope.setTag("is_cool", Math.random() > 0.5);
+      });
+
+      captureException(new SyntaxError("Looks like we goofed something up."));
+      updateTimes(times + 1);
+    }, 250);
+    return () => clearInterval(interval);
+  });
+
+  return <div>I've broken my code {times} times</div>;
 };
 
 export default Breaker;
