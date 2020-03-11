@@ -16,10 +16,10 @@ const StylishPage = styled.div`
     border-radius: 44px;
     background: #ceb4d4;
     box-shadow: 20px 20px 60px #af99b4, -20px -20px 60px #edcff4;
-    margin: 100px auto;
+    margin: 50px auto;
     text-align: center;
     color: #8f7e93;
-    width: 500px;
+    max-width: 50vw;
     font-family: "Space Mono", "Courier New", Courier, monospace;
     font-weight: bold;
     padding: 100px 200px;

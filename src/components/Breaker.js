@@ -1,59 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { captureException, configureScope } from "@sentry/browser";
+import info from "./info.json";
 
-const names = [
-  "mike",
-  "jkeff",
-  "woot",
-  "shibe",
-  "fake",
-  "jess",
-  "lyds",
-  "liam",
-  "emma",
-  "noah",
-  "olivia",
-  "william",
-  "ava",
-  "james",
-  "isabella",
-  "oliver",
-  "sophia",
-  "benjamin",
-  "charlotte",
-  "elijah",
-  "mia",
-  "lucas",
-  "amelia",
-  "mason",
-  "harper",
-  "logan",
-  "evelyn"
-];
-const handles = ["yahoo", "gmail", "aol", "fb", "fake", "example"];
+const { names, handles } = info;
 
 /* eslint-disable-next-line */
 Array.prototype.randomElement = function() {
   return this[Math.floor(Math.random() * this.length)];
 };
 
-const getId = num => {
-  return Math.floor(Math.random() * num);
+const getNum = (min, max) => {
+  return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const getUsername = () => names.randomElement() + getId(1000);
-
-const getEmail = () =>
-  names.randomElement() + getId(100) + "@" + handles.randomElement() + ".com";
+const getEmail = name => name + "@" + handles.randomElement() + ".com";
 
 const Breaker = () => {
   const [times, updateTimes] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
+      const username = names.randomElement() + getNum(10, 99);
       const user = {
-        id: getId(1231234),
-        username: getUsername(),
-        email: getEmail()
+        id: getNum(10000000, 99999999),
+        username,
+        email: getEmail(username)
       };
       configureScope(scope => {
         scope.setUser(user);
@@ -61,7 +31,7 @@ const Breaker = () => {
         scope.setTag("is_cool", Math.random() > 0.5);
       });
 
-      captureException(new SyntaxError("Looks like we goofed something up."));
+      captureException(new TypeError("We let the intern make that feature"));
       updateTimes(times + 1);
     }, 250);
     return () => clearInterval(interval);
