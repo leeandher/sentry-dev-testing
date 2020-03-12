@@ -30,8 +30,9 @@ const Breaker = () => {
         scope.setTag("best_friend", names.randomElement());
         scope.setTag("is_cool", Math.random() > 0.5);
       });
-
-      captureException(new TypeError("We let the intern make that feature"));
+      captureException(
+        new SyntaxError("Oops, we let the intern make this feature 😬")
+      );
       updateTimes(times + 1);
     }, 250);
     return () => clearInterval(interval);
